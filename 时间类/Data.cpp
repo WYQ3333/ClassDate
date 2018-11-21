@@ -41,7 +41,7 @@ public:
 		d._day = d._day + days;
 		while (d._day > array[d._month-1])
 		{
-			d._day = d._day + array[d._month-1];
+			d._day = d._day - array[d._month-1];
 			d._month++;
 			if (d._month > 12)
 			{
