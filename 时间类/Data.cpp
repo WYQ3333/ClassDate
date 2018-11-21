@@ -101,7 +101,69 @@ public:
 		}
 		return d;
 	}
+	//两个日期之间相差多少天
+	int operator-(const Date& d)
+	{
+		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+		{
+			array[1] = 29;//2月有29天
+		}
+		else
+		{
+			array[1] = 28;
+		}
+		int count = 0;//记录两个日期之间相差多少天
+		Date D(this->_year, this->_month, this->_day);
+		while (D._year < d._year)
+		{
+			if ((D._year % 4 == 0 && D._year % 100 != 0) || (D._year % 400 == 0))//闰年
+			{
+				count = count + 366;
+			}
+			else
+			{
+				count += 365;
+			}
+			D._year++;
+		}
+		while (D._year > d._year)
+		{
+			if ((D._year % 4 == 0 && D._year % 100 != 0) || (D._year % 400 == 0))//闰年
+			{
+				count = count + 366;
+			}
+			else
+			{
+				count = count + 365;
+			}
+			D._year--;
+		}
+		while ((d._year == D._year) && (d._month < D._month))
+		{
+			count += array[D._month];
+			D._month--;
+		}
+		while ((d._year == D._year) && (d._month > D._month))
+		{
+			count += array[D._month];
+			D._month++;
+		}
+		if ((d._year == D._year) && (d._month == D._month) && (D._day < d._day))
+		{
+			count += (d._day - D._day);
+		}
+		if ((d._year == D._year) && (d._month == D._month) && (D._day > d._day))
+		{
+			count += (D._day - d._day);
+		}
+		return count;
+	}
 	//打印
+	void PrintInt(int count)
+	{
+		cout << count << endl;
+	}
 	void PrintDate()
 	{
 		cout << _year << "-" << _month << "-" << _day << endl;
@@ -127,11 +189,14 @@ int main()
 	cout << "d3被d1赋值的日期为：";
 	d3.PrintDate();
 	Date d4 = d3 + 1;
-	cout << "d3+10000的日期为：";
+	cout << "d4=d3+10000的日期为：";
 	d4.PrintDate();
-	Date d5 = d3 - 100;
-	cout << "d3-10000的日期为：";
+	Date d5 = d3 - 1;
+	cout << "d5=d3-10000的日期为：";
 	d5.PrintDate();
+	int count = d5-d4;
+	cout << "d5与d4的日期之间相差的天数为：";
+	cout << count << endl;
 	system("pause");
 	return 0;
 }
