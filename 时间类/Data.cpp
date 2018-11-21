@@ -172,12 +172,13 @@ public:
 			array[1] = 28;
 		}
 		this->_day++;
-		if (this->_day > array[this->_month])
+		if (this->_day > array[this->_month-1])
 		{
-			this->_day = this->_day%array[this->_month];
+			this->_day = this->_day - array[this->_month - 1];
 			this->_month++;
 			if (this->_month > 12)
 			{
+				this->_month = 1;
 				this->_year++;
 			}
 		}
@@ -195,15 +196,65 @@ public:
 			array[1] = 28;
 		}
 		this->_day--;
-		if (this->_day > array[this->_month])
+		if (this->_day <= 0)
 		{
-			this->_day = this->_day%array[this->_month];
-			this->_month++;
-			if (this->_month > 12)
+			this->_day = this->_day + array[this->_month - 1];
+			this->_month--;
+			if (this->_month <= 0)
 			{
-				this->_year++;
+				this->_month = 12;
+				this->_year--;
 			}
 		}
+	}
+	//后置++
+	Date operator++(int)
+	{
+
+	}
+
+	//后置--
+	//==重载
+	bool operator==(const Date& d)const
+	{
+		return _year == d._year&&
+			_month == d._month&&
+			_day == d._day;
+	}
+	//>=重载
+	bool operator>=(const Date& d)const
+	{
+		return _year >= d._year ||
+			(_year==d._year&&_month >= d._month) ||
+			((_year == d._year&&_month == d._month)&&_day >= d._day);
+	}
+	//<=重载
+	bool operator<=(const Date& d)const
+	{
+		return _year <= d._year ||
+			(_year == d._year&&_month <= d._month) ||
+			((_year == d._year&&_month == d._month) && _day <= d._day);
+	}
+	//>重载
+	bool operator>(const Date& d)const
+	{
+		return _year > d._year ||
+			(_year == d._year&&_month > d._month) ||
+			((_year == d._year&&_month == d._month) && _day > d._day);
+	}
+	//<重载
+	bool operator<(const Date& d)const
+	{
+		return _year < d._year ||
+			(_year == d._year&&_month < d._month) ||
+			((_year == d._year&&_month == d._month) && _day < d._day);
+	}
+	//!=重载
+	bool operator!=(const Date& d)const
+	{
+		return _year != d._year&&
+			_month != d._month&&
+			_day != d._day;
 	}
 	//打印
 	void PrintInt(int count)
