@@ -72,14 +72,20 @@ public:
 			array[1] = 28;
 		}
 		Date d(this->_year, this->_month, this->_day);
+		int tmp = d._day;
+		int count = 1;
 		d._day = d._day - days;
 		while (d._day <=0)
 		{
-			d._day = d._day + array[d._month - 1];
+			/*if (count == 1)
+			{
+				d._day = d._day + tmp;
+				d._month--;
+				count = 0;
+			}*/
 			d._month--;
 			if (d._month <= 0)
 			{
-				d._month = 1;
 				d._year--;
 				if ((d._year % 4 == 0 && d._year % 100 != 0) || (d._year % 400 == 0))//闰年
 				{
@@ -89,7 +95,9 @@ public:
 				{
 					array[1] = 28;
 				}
+				d._month = 12;
 			}
+			d._day = d._day + array[d._month - 1];
 		}
 		return d;
 	}
@@ -118,10 +126,10 @@ int main()
 	Date d3 = d1;
 	cout << "d3被d1赋值的日期为：";
 	d3.PrintDate();
-	Date d4 = d3 + 10000;
+	Date d4 = d3 + 1;
 	cout << "d3+10000的日期为：";
 	d4.PrintDate();
-	Date d5 = d3 - 10000;
+	Date d5 = d3 - 100;
 	cout << "d3-10000的日期为：";
 	d5.PrintDate();
 	system("pause");
