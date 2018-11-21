@@ -28,7 +28,7 @@ public:
 	//日期加days后的日期
 	Date operator+(int days)
 	{
-		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 30 };
+		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
 		{
 			array[1] = 29;//2月有29天
@@ -45,11 +45,15 @@ public:
 			d._month++;
 			if (d._month > 12)
 			{
-				d._month = d._month % 12;
+				d._month = 1;
 				d._year++;
-				if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+				if ((d._year % 4 == 0 && d._year % 100 != 0) || (d._year % 400 == 0))//闰年
 				{
 					array[1] = 29;//2月有29天
+				}
+				else
+				{
+					array[1] = 28;
 				}
 			}
 		}
@@ -84,7 +88,7 @@ int main()
 	Date d3 = d1;
 	cout << "d3被d1赋值的日期为：";
 	d3.PrintDate();
-	Date d4 = d3 + 10;
+	Date d4 = d3 + 10000;
 	cout << "d4+2的日期为：";
 	d4.PrintDate();
 	system("pause");
