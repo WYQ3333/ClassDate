@@ -159,6 +159,52 @@ public:
 		}
 		return count;
 	}
+	//前置++重载
+	Date& operator++()
+	{
+		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+		{
+			array[1] = 29;//2月有29天
+		}
+		else
+		{
+			array[1] = 28;
+		}
+		this->_day++;
+		if (this->_day > array[this->_month])
+		{
+			this->_day = this->_day%array[this->_month];
+			this->_month++;
+			if (this->_month > 12)
+			{
+				this->_year++;
+			}
+		}
+	}
+	//前置--重载
+	Date& operator--()
+	{
+		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+		{
+			array[1] = 29;//2月有29天
+		}
+		else
+		{
+			array[1] = 28;
+		}
+		this->_day--;
+		if (this->_day > array[this->_month])
+		{
+			this->_day = this->_day%array[this->_month];
+			this->_month++;
+			if (this->_month > 12)
+			{
+				this->_year++;
+			}
+		}
+	}
 	//打印
 	void PrintInt(int count)
 	{
