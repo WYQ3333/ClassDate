@@ -33,45 +33,31 @@ public:
 		{
 			array[1] = 29;//2月有29天
 		}
+		else
+		{
+			array[1] = 28;
+		}
 		Date d(this->_year,this->_month,this->_day);
 		d._day = d._day + days;
-		if (d._day > array[d._month])
+		while (d._day > array[d._month-1])
 		{
-			int tmp = d._day;
-			d._day = d._day%array[d._month];
-			d._month = d._month + tmp / array[d._month];
-		}
-		if (d._month > 12)
-		{
-			int tmp = d._month;
-			d._month = d._month % 12;
-			d._year = d._year + tmp / 12;
+			d._day = d._day + array[d._month-1];
+			d._month++;
+			if (d._month > 12)
+			{
+				d._month = d._month % 12;
+				d._year++;
+				if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+				{
+					array[1] = 29;//2月有29天
+				}
+			}
 		}
 		return d;
 	}
 	//日期减去days后的日子
 	Date operator-(int days)
 	{
-		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 30 };
-		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
-		{
-			array[1] = 29;//2月有29天
-		}
-		Date d(this->_year, this->_month, this->_day);
-		d._day = d._day - days;
-		if (d._day < 0)
-		{
-			int tmp = -d._day;
-			d._day = d._day%array[d._month];
-			d._month = d._month + tmp / array[d._month];
-		}
-		if (d._month > 12)
-		{
-			int tmp = d._month;
-			d._month = d._month % 12;
-			d._year = d._year + tmp / 12;
-		}
-		return d;
 	}
 	//打印
 	void PrintDate()
