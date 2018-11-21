@@ -62,6 +62,36 @@ public:
 	//日期减去days后的日子
 	Date operator-(int days)
 	{
+		int array[12] = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
+		if ((this->_year % 4 == 0 && this->_year % 100 != 0) || (this->_year % 400 == 0))//闰年
+		{
+			array[1] = 29;//2月有29天
+		}
+		else
+		{
+			array[1] = 28;
+		}
+		Date d(this->_year, this->_month, this->_day);
+		d._day = d._day - days;
+		while (d._day <=0)
+		{
+			d._day = d._day + array[d._month - 1];
+			d._month--;
+			if (d._month <= 0)
+			{
+				d._month = 1;
+				d._year--;
+				if ((d._year % 4 == 0 && d._year % 100 != 0) || (d._year % 400 == 0))//闰年
+				{
+					array[1] = 29;//2月有29天
+				}
+				else
+				{
+					array[1] = 28;
+				}
+			}
+		}
+		return d;
 	}
 	//打印
 	void PrintDate()
@@ -89,8 +119,11 @@ int main()
 	cout << "d3被d1赋值的日期为：";
 	d3.PrintDate();
 	Date d4 = d3 + 10000;
-	cout << "d4+2的日期为：";
+	cout << "d3+10000的日期为：";
 	d4.PrintDate();
+	Date d5 = d3 - 10000;
+	cout << "d3-10000的日期为：";
+	d5.PrintDate();
 	system("pause");
 	return 0;
 }
