@@ -4,12 +4,17 @@ using namespace std;
 class Date{
 public:
 	//构造函数，完成成员变量的初始化
-	Date(int year=1900, int month=1, int day=1){
-		_year = year;
-		_month = month;
-		_day = day;
-	}
+	Date(int year = 1900, int month = 1, int day = 1)
+		:_year(year),
+		_month(month),
+		_day(day)
+	{}
 	//拷贝构造函数
+	friend ostream& operator<<(ostream& _cout,const Date& d)
+	{
+		_cout << d._year << "-" << d._month << "-" << d._day;
+		return _cout;
+	}
 	Date(const Date& d)
 	{
 		_year = d._year;
@@ -277,6 +282,7 @@ private:
 int main()
 {
 	Date d1(2018, 11, 21);
+	cout << d1 << endl;
 	cout << "d1的日期为：";
 	d1.PrintDate();
 	Date d2(d1);
